@@ -60,7 +60,9 @@
 			<c:forEach var="brdList" items="${brdList }">
 				<tr>
 					<td>${brdList.bd_id}</td>
-					<td>${brdList.bd_title}</td>
+					<td>
+						<a href="boardview.action?bd_id=${brdList.bd_id }">${brdList.bd_title}</a>
+					</td>
 				</tr>
 			</c:forEach>
 		</tbody>

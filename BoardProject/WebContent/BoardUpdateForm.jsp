@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게시판 작성 폼</title>
+<title>게시판 수정 폼</title>
 <link rel="stylesheet" type="text/css" href="css/main.css">
 
 
@@ -40,10 +40,11 @@ textarea {
 
 
 <div class="layout">
-	<form action="boardwrite.action" method="post">
-		<input type="text" name="bd_title">
-		<textarea rows="" cols="" name="bd_content"></textarea>
-		<button type="submit" class="btn">작성</button>
+	<form action="boardupdate.action" method="post">
+		<input type="text" name="bd_title" value="${brd.bd_title }">
+		<textarea rows="" cols="" name="bd_content">${brd.bd_content }</textarea>
+		<input type="hidden" name="bd_id" value="${brd.bd_id }">
+		<button type="submit" class="btn">수정</button>
 	</form>
 </div>
 

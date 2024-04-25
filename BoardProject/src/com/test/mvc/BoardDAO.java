@@ -25,7 +25,7 @@ public class BoardDAO
 	
 	
 	
-	
+	// 게시물 작성
 	public int boardWrite(String title, String content) throws SQLException
 	{
 		int result = 0;
@@ -42,7 +42,7 @@ public class BoardDAO
 		return result;
 	}
 	
-	
+	// 게시물 리스트
 	public ArrayList<BoardDTO> BoardList() throws SQLException
 	{
 		ArrayList<BoardDTO> result = new ArrayList<BoardDTO>();
@@ -68,6 +68,64 @@ public class BoardDAO
 		
 		return result;
 	}
+	
+	
+	// 특정 게시물 
+	public BoardDTO boardView(int bd_id) throws SQLException
+	{
+		BoardDTO result = new BoardDTO();
+		
+		String sql = "SELECT BD_ID, BD_TITLE, BD_CONTENT FROM TBL_BOARD WHERE BD_ID = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, bd_id);
+		
+		ResultSet rs = pstmt.executeQuery();
+		while (rs.next())
+		{
+			result.setBd_id(bd_id);
+			result.setBd_title(rs.getString("BD_TITLE"));
+			result.setBd_content(rs.getString("BD_CONTENT"));
+		}
+		
+		rs.close();
+		pstmt.close();
+		
+		return result;
+	}
+	
+	
+	// 게시물 삭제
+	public int boardDelete(int bd_id) throws SQLException
+	{
+		int result = 0;
+		
+		String sql = "DELETE FROM TBL_BOARD WHERE BD_ID = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1, bd_id);
+		
+		result = pstmt.executeUpdate();
+		pstmt.close();
+		
+		return result;
+	}
+	
+	// 게시물 수정
+	public int boardModify(BoardDTO brd) throws SQLException
+	{
+		int result = 0;
+		
+		String sql = "UPDATE TBL_BOARD SET BD_TITLE = ?, BD_CONTENT = ? WHERE BD_ID = ?";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, brd.getBd_title());
+		pstmt.setString(2, brd.getBd_content());
+		pstmt.setInt(3, brd.getBd_id());
+		
+		result = pstmt.executeUpdate();
+		pstmt.close();
+		
+		return result;
+	}
+	
 	
 	
 	

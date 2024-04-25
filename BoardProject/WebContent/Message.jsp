@@ -8,15 +8,23 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>게시만 상세 페이지</title>
+<title>Insert title here</title>
 <link rel="stylesheet" type="text/css" href="css/main.css">
+<!-- 제이쿼리 적용 JS -->
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript">
+
+	var message = '${message}';
+	var url = '${url}';
+	alert(message);
+	
+	location.replace(url);
+	
+	
+</script>
+
 </head>
 <body>
-
-<h1>${brd.bd_title }</h1>
-<p>${brd.bd_content }</p>
-<button type="button" onclick="location.href='boardupdateform.action?bd_id=${brd.bd_id}'">수정</button>
-<button type="button" onclick="location.href='boarddelete.action?bd_id=${brd.bd_id}'">삭제</button>
 
 </body>
 </html>
