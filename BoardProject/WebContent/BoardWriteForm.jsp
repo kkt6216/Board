@@ -40,9 +40,10 @@ textarea {
 
 
 <div class="layout">
-	<form action="boardwrite.action" method="post">
+	<form action="boardwrite.action" method="post" enctype="multipart/form-data">
 		<input type="text" name="bd_title">
 		<textarea rows="" cols="" name="bd_content"></textarea>
+		<input type="file" name="file">
 		<button type="submit" class="btn">작성</button>
 	</form>
 </div>

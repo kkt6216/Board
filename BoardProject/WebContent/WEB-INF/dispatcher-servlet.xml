@@ -21,8 +21,7 @@
 	<!--    - 『class=""』 속성은 -->
 	<!--       Controller 객체의 패키지 경로가 포함된 클래스 이름을 등록한다. -->
 	
-	
-	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
 	
 </beans>
 

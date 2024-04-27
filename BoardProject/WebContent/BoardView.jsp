@@ -14,7 +14,9 @@
 <body>
 
 <h1>${brd.bd_title }</h1>
+<img src="files/${brd.fileName }" alt="" />
 <p>${brd.bd_content }</p>
+<a href="/download.action?bd_id=${brd.bd_id }">다운로드</a>
 <button type="button" onclick="location.href='boardupdateform.action?bd_id=${brd.bd_id}'">수정</button>
 <button type="button" onclick="location.href='boarddelete.action?bd_id=${brd.bd_id}'">삭제</button>
 

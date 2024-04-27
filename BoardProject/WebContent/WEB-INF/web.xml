@@ -27,6 +27,8 @@
   	<url-pattern>*.action</url-pattern>
   </servlet-mapping>
   
+  
+  
   <!-- check~!!! -->
   <!-- 필터 등록 → 인코딩 필터 등록 → CharacterEncodingFilter --> 
   <filter>
@@ -45,6 +47,11 @@
   	<filter-name>encodingFilter</filter-name>
   	<url-pattern>/*</url-pattern> <!-- 『/*』 어떤 요청이든 다 가능 -->
   </filter-mapping>
+  
+  
+
+  
+  
   
 </web-app>
 

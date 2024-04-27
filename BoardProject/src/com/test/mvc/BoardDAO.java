@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+
 import com.util.DBConn;
 
 public class BoardDAO
@@ -26,19 +27,20 @@ public class BoardDAO
 	
 	
 	// 게시물 작성
-	public int boardWrite(String title, String content) throws SQLException
+	public int boardWrite(BoardDTO dto) throws SQLException
 	{
 		int result = 0;
 		
-		String sql = "INSERT INTO TBL_BOARD(BD_ID, BD_TITLE, BD_CONTENT) VALUES(BD_SEQ.NEXTVAL, ?, ?)";
+		String sql = "INSERT INTO TBL_BOARD(BD_ID, BD_TITLE, BD_CONTENT, FILENAME, FILEPATH) VALUES(BD_SEQ.NEXTVAL, ?, ?, ?, ?)";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, title);
-		pstmt.setString(2, content);
+		pstmt.setString(1, dto.getBd_title());
+		pstmt.setString(2, dto.getBd_content());
+		pstmt.setString(3, dto.getFileName());
+		pstmt.setString(4, dto.getFilePath());
 		
 		result = pstmt.executeUpdate();
 		
 		pstmt.close();
-		
 		return result;
 	}
 	
@@ -75,7 +77,7 @@ public class BoardDAO
 	{
 		BoardDTO result = new BoardDTO();
 		
-		String sql = "SELECT BD_ID, BD_TITLE, BD_CONTENT FROM TBL_BOARD WHERE BD_ID = ?";
+		String sql = "SELECT BD_ID, BD_TITLE, BD_CONTENT, FILENAME, FILEPATH FROM TBL_BOARD WHERE BD_ID = ?";
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		pstmt.setInt(1, bd_id);
 		
@@ -85,6 +87,8 @@ public class BoardDAO
 			result.setBd_id(bd_id);
 			result.setBd_title(rs.getString("BD_TITLE"));
 			result.setBd_content(rs.getString("BD_CONTENT"));
+			result.setFileName(rs.getString("FILENAME"));
+			result.setFilePath(rs.getString("FILEPATH"));
 		}
 		
 		rs.close();

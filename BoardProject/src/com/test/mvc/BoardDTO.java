@@ -4,6 +4,7 @@ public class BoardDTO
 {
 	private int bd_id;
 	private String bd_title, bd_content;
+	private String fileName, filePath;
 	
 	
 	public int getBd_id()
@@ -30,6 +31,23 @@ public class BoardDTO
 	{
 		this.bd_content = bd_content;
 	}
+	public String getFileName()
+	{
+		return fileName;
+	}
+	public void setFileName(String fileName)
+	{
+		this.fileName = fileName;
+	}
+	public String getFilePath()
+	{
+		return filePath;
+	}
+	public void setFilePath(String filePath)
+	{
+		this.filePath = filePath;
+	}
+	
 	
 	
 }

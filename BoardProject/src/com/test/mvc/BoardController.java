@@ -7,12 +7,33 @@
 
 package com.test.mvc;
 
+import java.awt.print.Pageable;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;					//-- check~!!!
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;		//-- check~!!!
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;		//-- check~!!!
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartResolver;
+
+
+
 
 // ※ Controller Annotation 활용
 @Controller												//-- check~!!
@@ -40,19 +61,49 @@ public class BoardController
 	
 	// 게시글 작성 액션 처리 메소드
 	@RequestMapping("/boardwrite.action")
-	public String write(Model model, String bd_title, String bd_content) throws SQLException, ClassNotFoundException
+	public String write(Model model, String bd_title, String bd_content, @RequestParam("file") MultipartFile file) throws IllegalStateException, IOException, ClassNotFoundException, SQLException 
 	{
+		// 파일 저장 경로
+		String filePath = "C:/Users/1/git/Board/BoardProject/WebContent/files/" + file.getOriginalFilename();
+        // 파일 저장
+		file.transferTo(new File(filePath));
+		
+		BoardDTO dto = new BoardDTO();
 		BoardDAO dao = new BoardDAO();
 		
-		dao.connection();
-		dao.boardWrite(bd_title, bd_content);
-		dao.close();
+		dto.setBd_title(bd_title);
+		dto.setBd_content(bd_content);
+		dto.setFileName(file.getOriginalFilename());
+		dto.setFilePath(filePath);
 		
-		model.addAttribute("message", "글 작성이 완료되었습니다.");
-		model.addAttribute("url", "/BoardProject/hello.action");
+		
+		dao.connection();
+		dao.boardWrite(dto);
+	  	dao.close();
+		  
+	  	model.addAttribute("message", "글 작성이 완료되었습니다."); 
+	  	model.addAttribute("url","/BoardProject/hello.action");
+		 
 		
 		return "Message.jsp";
 	}
+	
+	/*
+	 * // 다운로드
+	 * 
+	 * @RequestMapping(value = "/download.action") public String download(String
+	 * bd_id) { BoardDTO dto = new BoardDTO();
+	 * 
+	 * String filePath = dto.getFilePath();
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * return ""; }
+	 */
+	
 	
 	
 	// 특정 게시글 불러오기

@@ -69,6 +69,27 @@
 	</table>
 </div>
 
+ <%-- 페이징 UI --%>
+    <%-- 이전 페이지 링크 --%>
+    <c:if test="${page > 1}">
+        <a href="hello.action?page=${page - 1}">이전</a>
+    </c:if>
+    <%-- 페이지 번호 링크 --%>
+    <c:forEach var="i" begin="1" end="${totalPages}">
+        <c:choose>
+            <c:when test="${i == page}">
+                <strong>${i}</strong>
+            </c:when>
+            <c:otherwise>
+                <a href="hello.action?page=${i}">${i}</a>
+            </c:otherwise>
+        </c:choose>
+    </c:forEach>
+    <%-- 다음 페이지 링크 --%>
+    <c:if test="${page < totalPages}">
+        <a href="hello.action?page=${page + 1}">다음</a>
+    </c:if>
+
 
 
 
