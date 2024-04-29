@@ -7,30 +7,17 @@
 
 package com.test.mvc;
 
-import java.awt.print.Pageable;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.UUID;
 
-import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;					//-- check~!!!
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;		//-- check~!!!
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.MultipartResolver;
 
 
 
@@ -42,7 +29,7 @@ public class BoardController
 	
 	
 	// 게시판 리스트 페이지 메소드
-	@RequestMapping("/hello.action")
+	@RequestMapping("/boardlist.action")
 	public String hello(Model model) throws ClassNotFoundException, SQLException
 	{
 		ArrayList<BoardDTO> brdList = new ArrayList<BoardDTO>();
