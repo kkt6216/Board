@@ -1,9 +1,30 @@
+<%@page import="com.test.mvc.BoardDTO"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 	request.setCharacterEncoding("UTF-8");
 	String cp = request.getContextPath();
 %>
+<%
+	// 현재 페이지
+	int num = 1;
+
+	// 게시물 수
+	int totalCount = (Integer)request.getAttribute("count"); 
+
+	// 페이지 수 
+	int totalPage = totalCount/10 + 1; 
+	
+	// 게시물 
+	ArrayList<BoardDTO> brdList = (ArrayList<BoardDTO>) request.getAttribute("brdList");
+	
+	
+
+
+%>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,6 +70,10 @@
 
 
 <div class="layout">
+	<div>
+		게시물 수 : <%=totalCount %>
+		페이지 수 : <%=totalPage %>
+	</div>
 	<table>
 		<thead>
 			<tr>
@@ -67,28 +92,23 @@
 			</c:forEach>
 		</tbody>
 	</table>
+	
+	<div>
+		<a class="prev">이전</a>
+		<%
+		for(int i = num; i<= totalPage; i++)
+		{
+		%>
+		<a>[<%=i %>]</a>
+		<%
+		}
+		%>
+		
+		<a class="next">다음</a>
+	</div>
+	
 </div>
 
- <%-- 페이징 UI --%>
-    <%-- 이전 페이지 링크 --%>
-    <c:if test="${page > 1}">
-        <a href="hello.action?page=${page - 1}">이전</a>
-    </c:if>
-    <%-- 페이지 번호 링크 --%>
-    <c:forEach var="i" begin="1" end="${totalPages}">
-        <c:choose>
-            <c:when test="${i == page}">
-                <strong>${i}</strong>
-            </c:when>
-            <c:otherwise>
-                <a href="hello.action?page=${i}">${i}</a>
-            </c:otherwise>
-        </c:choose>
-    </c:forEach>
-    <%-- 다음 페이지 링크 --%>
-    <c:if test="${page < totalPages}">
-        <a href="hello.action?page=${page + 1}">다음</a>
-    </c:if>
 
 
 

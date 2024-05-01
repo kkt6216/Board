@@ -49,7 +49,7 @@ public class BoardDAO
 	{
 		ArrayList<BoardDTO> result = new ArrayList<BoardDTO>();
 		
-		String sql = "SELECT BD_ID, BD_TITLE, BD_CONTENT FROM TBL_BOARD ORDER BY 1";
+		String sql = "SELECT BD_ID, BD_TITLE, BD_CONTENT FROM TBL_BOARD ORDER BY 1 DESC";
 		
 		PreparedStatement pstmt = conn.prepareStatement(sql);
 		
@@ -125,6 +125,24 @@ public class BoardDAO
 		pstmt.setInt(3, brd.getBd_id());
 		
 		result = pstmt.executeUpdate();
+		pstmt.close();
+		
+		return result;
+	}
+	
+	// 게시물 갯수
+	public int listCount() throws SQLException
+	{
+		int result = 0;
+		
+		String sql = "SELECT COUNT(BD_ID) AS COUNT FROM TBL_BOARD";
+		PreparedStatement pstmt = conn.prepareStatement(sql);
+		
+		ResultSet rs = pstmt.executeQuery();
+		while (rs.next())
+			result = rs.getInt("COUNT");
+		
+		rs.close();
 		pstmt.close();
 		
 		return result;
