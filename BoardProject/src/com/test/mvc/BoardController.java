@@ -35,7 +35,7 @@ public class BoardController
 		ArrayList<BoardDTO> brdList = new ArrayList<BoardDTO>();
 		
 		int count = 0;
-		
+		 
 		BoardDAO dao = new BoardDAO();
 		dao.connection();
 		brdList = dao.BoardList();
