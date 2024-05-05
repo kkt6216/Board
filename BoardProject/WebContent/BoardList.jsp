@@ -7,20 +7,27 @@
 	String cp = request.getContextPath();
 %>
 <%
-	// 현재 페이지
-	int num = 1;
-
-	// 게시물 수
-	int totalCount = (Integer)request.getAttribute("count"); 
-
-	// 페이지 수 
-	int totalPage = totalCount/10 + 1; 
-	
-	// 게시물 
 	ArrayList<BoardDTO> brdList = (ArrayList<BoardDTO>) request.getAttribute("brdList");
-	
-	
 
+
+	// 전체 게시물 수 
+	int totalCount = (Integer) request.getAttribute("count");
+	
+	// 페이지당 게시물 수
+	int numPerPage = 10;
+	
+	// 전체 페이지 수 Math.ceil(올림 함수)
+	int totalPage = (int) Math.ceil((double)totalCount / numPerPage);
+	
+	// 현재 페이지
+  	int currentPage = (request.getParameter("page") != null) ? Integer.parseInt(request.getParameter("page")) : 1; // 현재 페이지
+
+ 	// 시작 페이지 번호
+  	int startPage = ((currentPage - 1) / 10) * 10 + 1;
+  	
+ 	// 끝 페이지 번호
+    int endPage = Math.min(startPage + 9, totalPage); 
+  	
 
 %>
 
@@ -34,11 +41,19 @@
 
 <style type="text/css">
 
-.layout{
+.layout {
+	width: 500px;
+	margin: 0 auto;
+	margin-top: 40px;
+	}
+	
+.paging-zone{
 	width: 500px;
 	margin: 0 auto;
 	margin-top: 40px;
 }
+	
+	
 
 </style>
 
@@ -82,31 +97,40 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="brdList" items="${brdList }">
-				<tr>
-					<td>${brdList.bd_id}</td>
-					<td>
-						<a href="boardview.action?bd_id=${brdList.bd_id }">${brdList.bd_title}</a>
-					</td>
-				</tr>
+				<c:forEach var="brdList" begin="<%= (currentPage - 1) * numPerPage %>" end="<%= Math.min(currentPage * numPerPage - 1, brdList.size() - 1) %>" items="${brdList}">
+			    <tr>
+			        <td>${brdList.bd_id}</td>
+			        <td><a href="boardview.action?bd_id=${brdList.bd_id}">${brdList.bd_title}</a></td>
+			    </tr>
 			</c:forEach>
 		</tbody>
 	</table>
+	 
 	
-	<div>
-		<a class="prev">이전</a>
-		<%
-		for(int i = num; i<= totalPage; i++)
-		{
-		%>
-		<a>[<%=i %>]</a>
-		<%
-		}
-		%>
-		
-		<a class="next">다음</a>
-	</div>
-	
+</div>
+
+<div class="paging-zone">
+    <%
+        if (currentPage > 1) {
+    %>
+        <a href="?page=<%= currentPage - 1 %>" class="prev">이전</a>
+    <%
+        }
+    %>
+    <%
+        for (int i = startPage; i <= endPage; i++) {
+    %>
+        <a href="?page=<%= i %>">[<%= i %>]</a>
+    <%
+        }
+    %>
+    <%
+        if (currentPage < totalPage) {
+    %>
+        <a href="?page=<%= currentPage + 1 %>" class="next">다음</a>
+    <%
+        }
+    %>
 </div>
 
 
